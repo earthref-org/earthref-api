@@ -28,7 +28,8 @@ components:
       required: true
       schema:
         type: string
-        enum: [MagIC, ERDA]
+        enum:
+          $ref: 'config.yaml#/repositories'
   responses:
     unauthorizedError:
       description: Authentication information is missing or invalid
@@ -118,10 +119,9 @@ paths:
             type: string
       responses:
         200:
-          description: Contribution is returned in the format requested by the accept header
+          description: One or more contributions are returned in the format requested by the accept header
         204:
-          description: Contribution with reference DOI or contribution ID not found
-          content: {}
+          description: No contributions matched the reference DOI(s) or contribution ID(s)
   /v1/{repository}/search/{table}:
     get:
       tags:
@@ -231,7 +231,6 @@ paths:
         200:
           description: File is uploaded to the contribution
         204:
-          description: Contribution with reference DOI not found
-          content: {}
+          description: The contribution ID was not found
         401:
           $ref: '#/components/responses/unauthorizedError'
